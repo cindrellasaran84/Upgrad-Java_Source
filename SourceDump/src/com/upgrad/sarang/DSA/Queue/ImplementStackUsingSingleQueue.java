@@ -1,90 +1,67 @@
 package com.upgrad.sarang.DSA.Queue;
+
 import java.util.*;
+
 public class ImplementStackUsingSingleQueue {
-    Queue<Integer> q1 = new LinkedList<>(), q2 = new LinkedList<>();
-    int curr_size;
+    Queue<Integer> q = new LinkedList<Integer>();
 
-    public ImplementStackUsingSingleQueue()
+    // Push operation
+    void push(int val)
     {
-        curr_size = 0;
-    }
+        // get previous size of queue
+        int size = q.size();
 
-    void remove()
-    {
-        if (q1.isEmpty())
-            return;
+        // Add current element
+        q.add(val);
 
-        // Leave one element in q1 and
-        // push others in q2.
-        while (q1.size() != 1) {
-            q2.add(q1.peek());
-            q1.remove();
+        // Pop (or Dequeue) all previous
+        // elements and put them after current
+        // element
+        for (int i = 0; i < size; i++)
+        {
+            // this will add front element into
+            // rear of queue
+            int x = q.remove();
+            q.add(x);
         }
-
-        // Pop the only left element
-        // from q1
-        q1.remove();
-        curr_size--;
-
-        // swap the names of two queues
-        Queue<Integer> q = q1;
-        q1 = q2;
-        q2 = q;
     }
 
-    void add(int x)
+    // Removes the top element
+    int pop()
     {
-        q1.add(x);
-        curr_size++;
+        if (q.isEmpty())
+        {
+            System.out.println("No elements");
+            return -1;
+        }
+        int x = q.remove();
+        return x;
     }
 
+    // Returns top of stack
     int top()
     {
-        if (q1.isEmpty())
+        if (q.isEmpty())
             return -1;
-
-        while (q1.size() != 1) {
-            q2.add(q1.peek());
-            q1.remove();
-        }
-
-        // last pushed element
-        int temp = q1.peek();
-
-        // to empty the auxiliary queue after
-        // last operation
-        q1.remove();
-
-        // push last element to q2
-        q2.add(temp);
-
-        // swap the two queues names
-        Queue<Integer> q = q1;
-        q1 = q2;
-        q2 = q;
-        return temp;
+        return q.peek();
     }
 
-    int size()
+    // Returns true if Stack is empty else false
+    boolean isEmpty()
     {
-        return curr_size;
+        return q.isEmpty();
     }
 
-    // Driver code
+    // Driver program to test above methods
     public static void main(String[] args)
     {
         ImplementStackUsingSingleQueue s = new ImplementStackUsingSingleQueue();
-        s.add(1);
-        s.add(2);
-        s.add(3);
-        s.add(4);
-
-        System.out.println("current size: " + s.size());
-        System.out.println(s.top());
-        s.remove();
-        System.out.println(s.top());
-        s.remove();
-        System.out.println(s.top());
-        System.out.println("current size: " + s.size());
+        s.push(10);
+        s.push(20);
+        System.out.println("Top element :" + s.top());
+        s.pop();
+        s.push(30);
+        s.pop();
+        System.out.println("Top element :" + s.top());
     }
 }

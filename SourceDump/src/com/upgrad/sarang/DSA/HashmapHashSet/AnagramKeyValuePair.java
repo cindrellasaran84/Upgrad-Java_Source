@@ -36,6 +36,8 @@ class AnagramKeyValuePair{
     }
     public static void main(String[] x){
         Map<String,String> map = new HashMap<>();
+
+
         Scanner sc = new Scanner(System.in);
         int num = sc.nextInt();
         String key;
@@ -61,6 +63,24 @@ class AnagramKeyValuePair{
             Collections.sort(l);
             for(String s : l){
                 System.out.println(s + " : " + map.get(s));
+            }
+        }
+    }
+
+    private void print(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int m : arr) {
+            if(map.containsKey(m)) {
+                int count = map.get(m);
+                map.put(m, count + 1);
+            } else {
+                map.put(m, 1);
+            }
+        }
+
+        for(int l : map.keySet()) {
+            if(map.get(l) % 2 == 1) {
+                System.out.println(l + " ");
             }
         }
     }
